@@ -12,13 +12,13 @@ load_dotenv()
 class QuestionProcessor:
     def __init__(self):
         self.question: str = None
-        self.documents: str = None
+        self.documents: List[str] = None
         self.facts: List[str] = None
         self.status: str = None
         self.processing_event = threading.Event()
         self.client = OpenAI()
 
-    def submit_question(self, question: str, documents: str):
+    def submit_question(self, question: str, documents: List[str]):
         self.question = question
         self.documents = documents
         self.status = "processing"
@@ -32,7 +32,7 @@ class QuestionProcessor:
         self.status = "done"
         self.processing_event.set()
 
-    def process_question(self, question, documents):
+    def process_question(self, question: str, documents: List[str]):
         log_context = utils.extract_logs(documents)
         if not log_context:
             return 'UserError: Could not process the url(s) provided'

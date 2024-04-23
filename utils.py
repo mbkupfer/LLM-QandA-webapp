@@ -4,9 +4,9 @@ import urllib.request
 from urllib.error import HTTPError, URLError
 
 
-def extract_logs(urls: str):
+def extract_logs(urls: List[str]):
     content = []
-    urls = [url.strip() for url in urls.split(",")]
+    urls = [url.strip() for url in urls]
     for url in urls:
         try:
             resp = urllib.request.urlopen(url)
