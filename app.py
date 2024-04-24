@@ -25,8 +25,13 @@ def summary():
 
 @app.route("/submit_question_and_documents", methods=["POST"])
 def submit_question_and_documents():
-    question = request.form.get("question")
-    documents = request.form.getlist("documents")
+    if request.headers.get('Content-Type') == 'application/json':
+        data = request.json
+        question = data.get("question")
+        documents = data.get("documents")
+    else:
+        question = request.form.get("question")
+        documents = request.form.getlist("documents")
     ai_agent.submit_question(question, documents=documents)
     return jsonify(
         {
