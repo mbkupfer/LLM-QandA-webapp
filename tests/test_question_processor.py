@@ -6,7 +6,9 @@ from question_processor import QuestionProcessor
 
 def test_inactive_response():
     process = QuestionProcessor()
-    assert process.response() == json.dumps({"status": "Inactive"})
+    assert process.response() == json.dumps(
+        {"question": None, "facts": None, "status": "Inactive"}
+    )
 
 
 def tests_processing_response(monkeypatch):

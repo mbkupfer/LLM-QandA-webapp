@@ -9,6 +9,7 @@ import utils
 
 load_dotenv()
 
+
 class QuestionProcessor:
     def __init__(self):
         self.question: str = None
@@ -35,7 +36,7 @@ class QuestionProcessor:
     def process_question(self, question: str, documents: List[str]):
         log_context = utils.extract_logs(documents)
         if not log_context:
-            return 'UserError: Could not process the url(s) provided'
+            return "UserError: Could not process the url(s) provided"
         prompt = f"""
  Given a chat log and a question, generate a concise and stricly literal 
  answer using only bullet points, ensuring that we discard any information that is overridden.
@@ -44,15 +45,16 @@ Chat Log: {log_context}
 
 Question: {question}
 """
-
-        response = self.client.chat.completions.create(model="gpt-4-turbo", messages=[{"role": "user", "content": prompt}])
+        response = self.client.chat.completions.create(
+            model="gpt-4-turbo", messages=[{"role": "user", "content": prompt}]
+        )
         bullets = response.choices[0].message.content
-        return bullets.replace('- ', '').split('\n')
+        return bullets.replace("- ", "").split("\n")
         
-    
+
     def response(self):
         if self.status is None:
-            return json.dumps({"status": "Inactive"})
+            return json.dumps({"question": None, "facts": None, "status": "Inactive"})
 
         response_data = {
             "question": self.question,
