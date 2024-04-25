@@ -28,8 +28,7 @@ class QuestionProcessor:
         thread.start()
 
     def process_question_thread(self):
-        facts = self.process_question(self.question, self.documents)
-        self.facts = facts
+        self.facts = self.process_question(self.question, self.documents)
         self.status = "done"
         self.processing_event.set()
 
